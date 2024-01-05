@@ -1,29 +1,3 @@
-# resource "kubernetes_manifest" "vault_secret_store" {
-#   manifest = {
-#     apiVersion = "external-secrets.io/v1beta1"
-#     kind       = "ClusterSecretStore"
-#     metadata = {
-#       name      = "vault-backend"
-#       namespace = "default"
-#     }
-#     spec = {
-#       provider = {
-#         vault = {
-#           server  = var.secret_store_server
-#           path    = var.secret_store_path
-#           version = var.secret_store_version
-#           auth = {
-#             tokenSecretRef = {
-#               name = var.secret_store_token_secret_name
-#               key  = "token"
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
-
 module "mysql" {
   source = "./mysql"
   providers = {

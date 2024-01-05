@@ -1,3 +1,4 @@
+# GCP Config
 variable "project" {
   description = "ID do projeto no GCP"
 }
@@ -18,19 +19,20 @@ variable "svc_account_email" {
   description = "E-mail que será referenciado"
 }
 
+# Cluster Config
 variable "cluster_name" {
   description = "Nome do cluster"
 }
 
+# Let's Encrypt Config
 variable "letsencrypt_email" {
   description = "LetsEncrypt Email"
 }
 
+# SecretStore
 variable "vault_server_domain" {
   description = "Vault Server Domain"
 }
-
-# SecretStore
 
 variable "secret_store_server" {
   description = "Server link for the secret store backend"
@@ -48,6 +50,7 @@ variable "secret_store_token_secret_name" {
   description = "Name of the secret with the access token"
 }
 
+# Vault Config
 variable "vault_address" {
   description = "Vault Url Address"
 }
@@ -56,6 +59,7 @@ variable "vault_terraform_token" {
   description = "Vault Token for Terraform"
 }
 
+# Vault Env Secrets Config
 variable "client_backend_env_secret" {
   description = "Path of the secret denied"
 }
@@ -94,10 +98,12 @@ variable "frontend_env_params" {
   })
 }
 
+# Client Config
 variable "client_name" {
   description = "Client Name without spaces"
 }
 
+# MySQL Config
 variable "mysql_server_instance_name" {
   description = "Instance Name from the MySQL Server on GCP"
 }
