@@ -1,3 +1,18 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.24.0"
+    }
+  }
+}
+
+resource "kubernetes_namespace" "client_namespace" {
+  metadata {
+    name = var.client_namespace
+  }
+}
+
 module "mysql" {
   source = "./mysql"
   providers = {
@@ -30,6 +45,7 @@ module "secret_inject" {
   depends_on = [module.mysql, module.object-storage]
 
   # Variables
+  client_namespace                   = var.client_namespace
   client_backend_env_secret          = var.client_backend_env_secret
   client_backend_env_secret_version  = var.client_backend_env_secret_version
   client_frontend_env_secret         = var.client_frontend_env_secret
@@ -46,4 +62,23 @@ module "secret_inject" {
   mysql_config = {
     database_url = module.mysql.database_connection_url
   }
+}
+
+module "external-secret-operator" {
+  source = "./external-secret-operator"
+  providers = {
+    kubernetes = kubernetes
+    vault      = vault
+  }
+
+  depends_on = [module.secret_inject, kubernetes_namespace.client_namespace]
+
+  # Variables
+  vault_address                  = var.vault_address
+  client_name                    = var.client_name
+  client_namespace               = var.client_namespace
+  secret_store_server            = var.secret_store_server
+  secret_store_path              = var.secret_store_path
+  secret_store_version           = var.secret_store_version
+  secret_store_token_secret_name = var.secret_store_token_secret_name
 }

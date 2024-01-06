@@ -30,10 +30,6 @@ variable "letsencrypt_email" {
 }
 
 # SecretStore
-variable "vault_server_domain" {
-  description = "Vault Server Domain"
-}
-
 variable "secret_store_server" {
   description = "Server link for the secret store backend"
 }
@@ -57,6 +53,10 @@ variable "vault_address" {
 
 variable "vault_terraform_token" {
   description = "Vault Token for Terraform"
+}
+
+variable "vault_server_domain" {
+  description = "Vault Server Domain"
 }
 
 # Vault Env Secrets Config
@@ -101,6 +101,10 @@ variable "frontend_env_params" {
 # Client Config
 variable "client_name" {
   description = "Client Name without spaces"
+}
+
+variable "client_namespace" {
+  description = "Client Namespace"
 }
 
 # MySQL Config

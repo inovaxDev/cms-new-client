@@ -7,19 +7,21 @@ terraform {
 }
 
 resource "vault_mount" "secret_kv" {
-  path        = "secret"
+  path        = "${var.client_namespace}_kv"
   type        = "kv"
-  options     = { version = "1" }
-  description = "KV Version 1 secret engine mount"
+  options     = { version = "2" }
+  description = "KV Version 2 secret engine mount"
 }
 
-resource "vault_kv_secret" "frontend_env_secret" {
-  path      = "${vault_mount.secret_kv.path}/${var.client_frontend_env_secret}"
+resource "vault_kv_secret_v2" "frontend_env_secret_v2" {
+  name      = var.client_frontend_env_secret
+  mount     = vault_mount.secret_kv.path
   data_json = jsonencode(var.frontend_env_params)
 }
 
-resource "vault_kv_secret" "backend_env_secret" {
-  path = "${vault_mount.secret_kv.path}/${var.client_backend_env_secret}"
+resource "vault_kv_secret_v2" "backend_env_secret_v2" {
+  name  = var.client_backend_env_secret
+  mount = vault_mount.secret_kv.path
   data_json = jsonencode({
     SALT                          = var.backend_env_params.SALT
     JWT_SECRET                    = var.backend_env_params.JWT_SECRET

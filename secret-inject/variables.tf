@@ -1,3 +1,7 @@
+variable "client_namespace" {
+  description = "Client Namespace"
+}
+
 variable "client_backend_env_secret" {
   description = "Path of the secret denied"
 }
