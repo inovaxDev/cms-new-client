@@ -108,3 +108,42 @@ resource "kubernetes_manifest" "backend_external_secret" {
     }
   }
 }
+
+resource "kubernetes_manifest" "frontend_external_secret" {
+  depends_on = [kubernetes_manifest.vault_secret_store]
+
+  manifest = {
+    apiVersion = "external-secrets.io/v1beta1"
+    kind       = "ExternalSecret"
+    metadata = {
+      name      = "cms-frontend-env-external-secret"
+      namespace = var.client_namespace
+    }
+    spec = {
+      refreshInterval = "10s"
+      secretStoreRef = {
+        name = kubernetes_manifest.vault_secret_store.manifest.metadata.name
+        kind = "SecretStore"
+      }
+      target = {
+        name           = "cms-frontend-env"
+        creationPolicy = "Owner"
+      }
+      dataFrom = [
+        {
+          extract = {
+            key = "frontend-env"
+          }
+          rewrite = [
+            {
+              regexp = {
+                source = "[^a-zA-Z0-9 -]"
+                target = "_"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
