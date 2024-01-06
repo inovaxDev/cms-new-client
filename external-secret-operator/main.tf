@@ -147,3 +147,10 @@ resource "kubernetes_manifest" "frontend_external_secret" {
     }
   }
 }
+
+output "eso_secret_generate" {
+  value = {
+    frontend = kubernetes_manifest.frontend_external_secret.manifest.spec.target.name
+    backend  = kubernetes_manifest.backend_external_secret.manifest.spec.target.name
+  }
+}
