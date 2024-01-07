@@ -30,5 +30,5 @@ resource "google_sql_user" "client_admin_user" {
 }
 
 output "database_connection_url" {
-  value = "mysql://${google_sql_user.client_admin_user.name}:${google_sql_user.client_admin_user.password}@${data.google_sql_database_instance.cms_instance.public_ip_address}:3306/${google_sql_database.client_database.name}"
+  value = "mysql://${google_sql_user.client_admin_user.name}:${google_sql_user.client_admin_user.password}@${data.google_sql_database_instance.cms_instance.private_ip_address}:3306/${google_sql_database.client_database.name}"
 }

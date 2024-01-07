@@ -115,3 +115,40 @@ variable "mysql_server_instance_name" {
 variable "db_password" {
   description = "Database Password"
 }
+
+# App Deploy
+variable "frontend_image_config" {
+  type = object({
+    image = string
+    port  = number
+
+    env_secret_name = string
+
+    limits = object({
+      cpu    = string
+      memory = string
+    })
+    requests = object({
+      cpu    = string
+      memory = string
+    })
+  })
+}
+
+variable "backend_image_config" {
+  type = object({
+    image = string
+    port  = number
+
+    env_secret_name = string
+
+    limits = object({
+      cpu    = string
+      memory = string
+    })
+    requests = object({
+      cpu    = string
+      memory = string
+    })
+  })
+}

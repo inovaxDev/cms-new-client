@@ -82,3 +82,17 @@ module "external-secret-operator" {
   secret_store_version           = var.secret_store_version
   secret_store_token_secret_name = var.secret_store_token_secret_name
 }
+
+module "app_deploy" {
+  source = "./app-deploy"
+  providers = {
+    kubernetes = kubernetes
+  }
+
+  depends_on = [ module.external-secret-operator ]
+
+  # Variables
+  client_namespace      = var.client_namespace
+  frontend_image_config = var.frontend_image_config
+  backend_image_config  = var.backend_image_config
+}
