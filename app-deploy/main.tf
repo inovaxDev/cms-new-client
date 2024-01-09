@@ -165,7 +165,6 @@ resource "kubernetes_service" "frontend_service" {
   }
 }
 
-
 resource "kubernetes_service" "backend_service" {
   metadata {
     name      = "backend-service"

@@ -89,10 +89,27 @@ module "app_deploy" {
     kubernetes = kubernetes
   }
 
-  depends_on = [ module.external-secret-operator ]
+  depends_on = [module.external-secret-operator]
 
   # Variables
   client_namespace      = var.client_namespace
   frontend_image_config = var.frontend_image_config
   backend_image_config  = var.backend_image_config
+}
+
+module "ingress" {
+  source = "./ingress"
+  providers = {
+    google     = google
+    kubernetes = kubernetes
+  }
+
+  depends_on = [module.app_deploy]
+
+  # Variables
+  cert_manager_email    = var.cert_manager_email
+  client_namespace      = var.client_namespace
+  dns_zone_name         = var.dns_zone_name
+  ingress_controller_ip = var.ingress_controller_ip
+  domain                = var.domain
 }

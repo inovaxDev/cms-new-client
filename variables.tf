@@ -107,6 +107,10 @@ variable "client_namespace" {
   description = "Client Namespace"
 }
 
+variable "domain" {
+  type = string
+}
+
 # MySQL Config
 variable "mysql_server_instance_name" {
   description = "Instance Name from the MySQL Server on GCP"
@@ -151,4 +155,13 @@ variable "backend_image_config" {
       memory = string
     })
   })
+}
+
+# Ingress Config
+variable "ingress_controller_ip" {
+  description = "Ingress Controller IP"
+}
+
+variable "cert_manager_email" {
+  type = string
 }
